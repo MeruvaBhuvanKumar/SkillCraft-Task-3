@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap'); /* Modern, soft font */
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #282c36; /* Dark slate grey/blue background */
+    color: #eceff4; /* Light grey for general text */
+    overflow: hidden;
+}
+
+.game-container {
+    background-color: #282c36; /* Same as body for seamless look */
+    padding: 40px;
+    border-radius: 25px; /* Significantly rounded corners */
+    box-shadow: 6px 6px 12px #1f2229, /* Darker, bottom-right shadow */
+                -6px -6px 12px #31363f; /* Lighter, top-left highlight */
+    text-align: center;
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+}
+
+h1 {
+    color: #09bced; /* Nordic blue for the title */
+    margin-bottom: 25px;
+    font-size: 2.8em;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Subtle shadow for text */
+}
+
+.message {
+    font-size: 1.4em;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: #ff0000; /* Muted purple for messages */
+    font-weight: 400;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 110px);
+    grid-template-rows: repeat(3, 110px);
+    gap: 15px; /* Larger gap for distinct cells */
+    margin: 0 auto 35px auto;
+    width: 360px; /* 3*110px + 2*15px */
+    height: 360px; /* 3*110px + 2*15px */
+    background-color: #0a30ec; /* Same as background */
+    border-radius: 20px;
+    box-shadow: inset 5px 5px 10px #0d47ce, /* Inner dark shadow to simulate recess */
+                inset -5px -5px 10px #0958ea; /* Inner light highlight */
+    padding: 10px; /* Padding for the inner board */
+}
+
+.cell {
+    width: 110px;
+    height: 110px;
+    background-color: #282c36; /* Same as background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.5em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border-radius: 20px; /* Rounded cell corners */
+    box-shadow: 4px 4px 8px #1f2229, /* Cell convex shadow */
+                -4px -4px 8px #31363f; /* Cell convex highlight */
+}
+
+.cell:hover:not(.occupied) {
+    box-shadow: inset 3px 3px 6px #1f2229, /* Simulates "pressing in" on hover */
+                inset -3px -3px 6px #31363f;
+    transform: scale(0.98); /* Slight shrink on press */
+}
+
+/* Colors for X and O */
+.cell[data-player="X"] {
+    color: #bf616a; /* Desaturated red/pink for X */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.cell[data-player="O"] {
+    color: #a3be8c; /* Desaturated green for O */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.cell.occupied {
+    cursor: not-allowed;
+    background-color: #282c36; /* Stays same background */
+    box-shadow: inset 3px 3px 6px #1f2229, /* Remains "pressed in" */
+                inset -3px -3px 6px #31363f;
+    transform: none; /* No scaling */
+}
+
+/* --- Winning Cell Highlight --- */
+.cell.winning-cell {
+    background-color: #88c0d0; /* Highlight color: Nordic blue */
+    box-shadow: 0 0 15px #88c0d0, /* Strong glow */
+                0 0 25px #88c0d0;
+    transform: scale(1.05); /* Slightly larger */
+    animation: flashWin 1s infinite alternate; /* Pulsing animation */
+}
+
+.cell.winning-cell[data-player="X"] {
+    color: #2e3440; /* Darker text on highlight */
+    background-color: #bf616a; /* Use X's color for winning background */
+    box-shadow: 0 0 15px #bf616a, 0 0 25px #bf616a;
+}
+
+.cell.winning-cell[data-player="O"] {
+    color: #2e3440; /* Darker text on highlight */
+    background-color: #a3be8c; /* Use O's color for winning background */
+    box-shadow: 0 0 15px #a3be8c, 0 0 25px #a3be8c;
+}
+
+@keyframes flashWin {
+    from { opacity: 1; }
+    to { opacity: 0.8; }
+}
+
+
+#resetButton {
+    background-color: #282c36;
+    color: #03c2f7; /* Match primary accent color */
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: 600;
+    border-radius: 30px; /* Pill shape */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 30px;
+    box-shadow: 6px 6px 12px #1f2229,
+                -6px -6px 12px #31363f;
+}
+
+#resetButton:hover {
+    box-shadow: inset 4px 4px 8px #1f2229, /* Press in effect on hover */
+                inset -4px -4px 8px #31363f;
+    color: #5e81ac; /* Slightly darker blue */
+    transform: translateY(2px); /* Slight downward press */
+}
+
+.mode-selection {
+    margin-top: 30px;
+    color: #fa0404; /* Muted purple for messages */
+    font-size: 1.1em;
+}
+
+#gameMode {
+    padding: 10px 15px;
+    border-radius: 20px; /* Pill shape for select */
+    border: none; /* No visible border */
+    background-color: #282c36;
+    color: #6eeb09; /* Match primary accent color */
+    cursor: pointer;
+    font-size: 1em;
+    appearance: none;
+    box-shadow: 3px 3px 6px #1f2229, /* Convex shadow */
+                -3px -3px 6px #31363f; /* Convex highlight */
+    transition: all 0.2s ease-in-out;
+    /* Custom arrow for select */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2388c0d0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16.1%208.1-3.9%204.9-3.9%2011.6%200%2016.5l129.5%20129.5c4.7%204.7%2012.3%204.7%2017%200l129.5-129.5c3.8-4.9%203.8-11.6%200-16.5z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 10px auto;
+}
+
+#gameMode:hover {
+    box-shadow: inset 2px 2px 4px #1f2229, /* Press in on hover */
+                inset -2px -2px 4px #31363f;
+}
+
+#gameMode:focus {
+    outline: none;
+    box-shadow: inset 2px 2px 4px #1f2229, /* Remains pressed in */
+                inset -2px -2px 4px #31363f,
+                0 0 0 3px rgba(136, 192, 208, 0.3); /* Subtle focus glow */
+}
